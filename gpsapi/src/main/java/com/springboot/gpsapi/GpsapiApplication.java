@@ -9,5 +9,7 @@ public class GpsapiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GpsapiApplication.class, args);
 	}
+	
+	//테스트
 
 }
