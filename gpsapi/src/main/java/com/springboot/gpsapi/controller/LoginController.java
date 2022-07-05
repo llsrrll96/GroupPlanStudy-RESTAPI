@@ -1,5 +1,7 @@
 package com.springboot.gpsapi.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,11 @@ public class LoginController
 		return new ResponseEntity<>(loginService.createUser(userDto),HttpStatus.CREATED);
 	}
 	
+	// get All User List
+	@GetMapping
+	public List<UserDto> getAllUser(){
+		return loginService.getAllUserDto();
+	}
 	
 	// get User by id
 	@GetMapping("/{id}")
