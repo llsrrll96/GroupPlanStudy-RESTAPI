@@ -41,7 +41,6 @@ public class QnaBoardComment {
 	private Date regdate;
 	
 	@ManyToOne
-	@Transient
 	private QnaBoard qnaboard;
 	
 

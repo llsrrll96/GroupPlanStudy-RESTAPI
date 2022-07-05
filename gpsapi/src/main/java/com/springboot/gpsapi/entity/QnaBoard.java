@@ -9,8 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -31,7 +31,7 @@ public class QnaBoard {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long bid;
 	
-	@OneToMany(mappedBy = "GroupRoom", fetch=FetchType.LAZY, cascade = CascadeType.ALL) 
+	@ManyToOne
 	@JsonIgnoreProperties("GroupRoom")
 	private GroupRoom gr_id;
 	
@@ -46,9 +46,8 @@ public class QnaBoard {
 	private Date regdate;
 	
 	
-	@OneToMany(mappedBy = "QnaBoardComment", fetch=FetchType.LAZY) 
-	@JsonIgnoreProperties("QnaBoardComment")
-	@Transient
+	@OneToMany(mappedBy = "QnaBoard", fetch=FetchType.LAZY) 
+	@JsonIgnoreProperties("QnaBoard")
 	private List<QnaBoardComment> qnaboardcomment;
 	
 
