@@ -1,5 +1,7 @@
 package com.springboot.gpsapi.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springboot.gpsapi.payload.APIMessage;
 import com.springboot.gpsapi.payload.UserDto;
 import com.springboot.gpsapi.service.LoginService;
 
@@ -27,6 +30,11 @@ public class LoginController
 		return new ResponseEntity<>(loginService.createUser(userDto),HttpStatus.CREATED);
 	}
 	
+	// get All User List
+	@GetMapping
+	public List<UserDto> getAllUser(){
+		return loginService.getAllUserDto();
+	}
 	
 	// get User by id
 	@GetMapping("/{id}")
@@ -42,9 +50,11 @@ public class LoginController
 	
 	// delete post by id rest api
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deletePost(@PathVariable Long id)
+	public ResponseEntity<APIMessage> deletePost(@PathVariable Long id)
 	{
 		loginService.deleteUserById(id);
-		return new ResponseEntity<>("ok",HttpStatus.OK);
+		APIMessage apimessage = new APIMessage();
+		apimessage.setMessage("Delete User");
+		return new ResponseEntity<>(apimessage,HttpStatus.OK);
 	}
 }

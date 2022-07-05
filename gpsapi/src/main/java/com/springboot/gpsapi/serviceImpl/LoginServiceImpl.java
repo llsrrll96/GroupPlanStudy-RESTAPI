@@ -1,6 +1,9 @@
 package com.springboot.gpsapi.serviceImpl;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,6 @@ public class LoginServiceImpl implements LoginService
 	
 	@Override
 	public UserDto createUser(UserDto userDto) {
-		
 		User user = mapToEntity(userDto);
 		User newUser=loginRepository.save(user);
 		
@@ -30,26 +32,34 @@ public class LoginServiceImpl implements LoginService
 
 	@Override
 	public List<UserDto> getAllUserDto() {
-		// TODO Auto-generated method stub
-		return null;
+		List<User> userList= loginRepository.findAll();
+		
+		return userList.stream().map(post->mapToDto(post)).collect(Collectors.toList());
 	}
 
 	@Override
 	public UserDto getUserById(Long uid) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = loginRepository.findById(uid).get();
+		
+		return mapToDto(user);
 	}
 
 	@Override
+	@Transactional
 	public UserDto updateUser(UserDto userDto, Long uid) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = loginRepository.findById(uid).get();
+		user.setEmail(userDto.getEmail());
+		user.setIntroduce(userDto.getIntroduce());
+		user.setNickname(userDto.getNickname());
+		user.setPassword(userDto.getPassword());
+		
+		return mapToDto(user);
 	}
 
 	@Override
 	public void deleteUserById(Long uid) {
-		// TODO Auto-generated method stub
-		
+		User user = loginRepository.findById(uid).get();
+		loginRepository.delete(user);
 	}
 	
 	
