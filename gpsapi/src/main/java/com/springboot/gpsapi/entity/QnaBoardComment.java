@@ -25,7 +25,7 @@ public class QnaBoardComment {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long cid;
 	
-	private User uid;
+	private Long uid;
 	private String content;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone="Asia/seoul")
