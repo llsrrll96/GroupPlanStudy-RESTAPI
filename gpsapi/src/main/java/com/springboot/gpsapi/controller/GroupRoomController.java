@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springboot.gpsapi.payload.APIMessage;
 import com.springboot.gpsapi.payload.GroupRoomDto;
 import com.springboot.gpsapi.service.GroupRoomService;
 
@@ -49,9 +50,11 @@ public class GroupRoomController {
 	
 	//delete Group room by id rest api
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteGRoom(@PathVariable(name="id") long gr_id){
+	public ResponseEntity<APIMessage> deleteGRoom(@PathVariable(name="id") long gr_id){
 		grService.deleteGRomById(gr_id);
-		return new ResponseEntity<>("Delete Group Room",HttpStatus.OK);
+		APIMessage apimessage = new APIMessage();
+		apimessage.setMessage("Delete Group Room");
+		return new ResponseEntity<>(apimessage,HttpStatus.OK);
 	}
 	
 	
