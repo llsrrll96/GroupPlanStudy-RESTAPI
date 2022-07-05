@@ -33,12 +33,10 @@ public class QnaBoard {
 	
 	@OneToMany(mappedBy = "GroupRoom", fetch=FetchType.LAZY, cascade = CascadeType.ALL) 
 	@JsonIgnoreProperties("GroupRoom")
-	@Transient
 	private GroupRoom gr_id;
 	
 	@OneToMany(mappedBy = "User", fetch=FetchType.LAZY, cascade = CascadeType.ALL) 
 	@JsonIgnoreProperties("User")
-	@Transient
 	private User uid;
 	
 	private String title;

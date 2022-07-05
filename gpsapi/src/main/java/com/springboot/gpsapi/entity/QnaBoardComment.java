@@ -32,7 +32,6 @@ public class QnaBoardComment {
 	
 	@OneToMany(mappedBy = "QnaBoard", fetch=FetchType.LAZY, cascade = CascadeType.ALL) 
 	@JsonIgnoreProperties("QnaBoard")
-	@Transient
 	private QnaBoard bid;
 	
 	private User uid;
