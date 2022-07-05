@@ -3,15 +3,14 @@ package com.springboot.gpsapi.entity;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -32,12 +31,12 @@ public class QnaBoard {
 	private Long bid;
 	
 	@ManyToOne
-	@JsonIgnoreProperties("GroupRoom")
-	private GroupRoom gr_id;
+	@JoinColumn(name = "gr_id")
+	private GroupRoom grouproom;
 	
-	@OneToMany(mappedBy = "User", fetch=FetchType.LAZY, cascade = CascadeType.ALL) 
-	@JsonIgnoreProperties("User")
-	private User uid;
+	@ManyToOne
+	@JoinColumn(name = "uid")
+	private User user;
 	
 	private String title;
 	private String content;
@@ -48,7 +47,7 @@ public class QnaBoard {
 	
 	@OneToMany(mappedBy = "QnaBoard", fetch=FetchType.LAZY) 
 	@JsonIgnoreProperties("QnaBoard")
-	private List<QnaBoardComment> qnaboardcomment;
+	private List<QnaBoardComment> qnaboardcomments;
 	
 
 }
