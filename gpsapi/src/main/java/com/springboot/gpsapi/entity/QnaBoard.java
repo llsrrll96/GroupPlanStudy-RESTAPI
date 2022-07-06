@@ -32,7 +32,7 @@ public class QnaBoard {
 	
 	@ManyToOne
 	@JoinColumn(name = "gr_id")
-	private GroupRoom grouproom;
+	private GroupRoom groupRoom;
 	
 	@ManyToOne
 	@JoinColumn(name = "uid")
