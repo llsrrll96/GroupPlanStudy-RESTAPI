@@ -1,8 +1,10 @@
 package com.springboot.gpsapi.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -41,13 +47,15 @@ public class QnaBoard {
 	private String title;
 	private String content;
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone="Asia/seoul")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="Asia/seoul")
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date regdate;
 	
 	
-	@OneToMany(mappedBy = "qnaboard", fetch=FetchType.LAZY) 
+	@OneToMany(mappedBy = "qnaboard", fetch=FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval= true) 
 	@JsonIgnoreProperties("qnaboard")
-	private List<QnaBoardComment> qnaboardcomments;
+	private List<QnaBoardComment> qnaboardcomments = new ArrayList<>() ;
 	
 
 }

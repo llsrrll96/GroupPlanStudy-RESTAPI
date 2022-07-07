@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import com.springboot.gpsapi.entity.GroupRoom;
 import com.springboot.gpsapi.entity.QnaBoard;
 import com.springboot.gpsapi.entity.User;
+import com.springboot.gpsapi.payload.GroupRoomDto;
 import com.springboot.gpsapi.payload.QnaBoardDto;
+import com.springboot.gpsapi.payload.UserDto;
 import com.springboot.gpsapi.repository.GroupRoomRepository;
 import com.springboot.gpsapi.repository.LoginRepository;
 import com.springboot.gpsapi.repository.QnaBoardRepository;
@@ -35,7 +37,6 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 	@Override
 	@Transactional
 	public QnaBoardDto createQnaboard(QnaBoardDto qnaboardDto, Long grId, Long uid) {
-		System.out.println("확인2");
 		QnaBoard qnaboard = mapToEntity(qnaboardDto);
 		
 		User user = loginRepository.findById(uid).get();
@@ -61,7 +62,6 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 		
 		qnaboard.setTitle(qnaboardDto.getTitle());
 		qnaboard.setContent(qnaboardDto.getContent());
-		qnaboard.setRegdate(qnaboardDto.getRegdate());
 				
 		return mapToDto(qnaboard);
 	}
@@ -74,24 +74,17 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 		
 	}
 	
-	//보기
+	//상세보기
 	@Override
 	public QnaBoardDto showQnaboard(Long bid) {
-		// TODO Auto-generated method stub
-		return null;
+		QnaBoard qnaboard = qnaboardRepository.findById(bid).get();
+		return mapToDto(qnaboard);
 	}
 	
-//	//전체보기
-//	@Override
-//	public List<QnaBoardDto> getAllQnaboardList() {
-//		List<QnaBoard> qnaboardList = qnaboardRepository.findAll();
-//		return qnaboardList.stream().map(post->mapToDto(post)).collect(Collectors.toList());
-//	}
 	
 	//전체보기
 	@Override
 	public List<QnaBoardDto> getAllQnaboardList(long grId) {
-		System.out.println("테스트");
 		GroupRoom groupRoom = gRoomRepository.findById(grId).get();
 		List<QnaBoard> qnaboardList = qnaboardRepository.findByGroupRoom(groupRoom);
 		return qnaboardList.stream().map(post->mapToDto(post)).collect(Collectors.toList());
@@ -101,12 +94,28 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 	
 	// DTO -- Entity
 	private QnaBoard mapToEntity(QnaBoardDto qnaboardDto){
-		QnaBoard user = mapper.map(qnaboardDto, QnaBoard.class);
-		return user;
+		QnaBoard qnaboard = mapper.map(qnaboardDto, QnaBoard.class);
+		
+		GroupRoom gRoom= new GroupRoom();
+		qnaboard.setGroupRoom(gRoom);
+		
+		User user = new User();
+		qnaboard.setUser(user);
+		
+		return qnaboard;
 	}
 	
 	private QnaBoardDto mapToDto(QnaBoard qnaboard){
 		QnaBoardDto qnaboardDto = mapper.map(qnaboard, QnaBoardDto.class);
+		
+		GroupRoomDto gRoomDto= null;
+		gRoomDto = mapper.map(qnaboard.getGroupRoom(), GroupRoomDto.class);
+		qnaboardDto.setGrouproomDto(gRoomDto);
+		
+		UserDto userDto = null;
+		userDto = mapper.map(qnaboard.getUser() , UserDto.class);
+		qnaboardDto.setUserDto(userDto);
+		
 		return qnaboardDto;
 	}
 	

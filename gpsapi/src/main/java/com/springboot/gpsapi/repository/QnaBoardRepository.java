@@ -1,10 +1,6 @@
 package com.springboot.gpsapi.repository;
 
 import java.util.List;
-import java.util.Optional;
-
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springboot.gpsapi.entity.GroupRoom;
 import com.springboot.gpsapi.payload.APIMessage;
 import com.springboot.gpsapi.payload.QnaBoardDto;
 import com.springboot.gpsapi.service.QnaBoardService;
@@ -28,9 +27,8 @@ public class QnaBoardController {
 	
 	
 	//생성
-	@PostMapping("/{grId}/test/{uid}")
+	@PostMapping("/{grId}/qnaboard/{uid}")
 	public ResponseEntity<QnaBoardDto> createQnaboard(@RequestBody QnaBoardDto qnaboardDto, @PathVariable long grId,@PathVariable long uid){
-		System.out.println("확인");
 		return new ResponseEntity<QnaBoardDto>(qnaboardService.createQnaboard(qnaboardDto, grId, uid),HttpStatus.CREATED);
 	}
 	
@@ -49,22 +47,16 @@ public class QnaBoardController {
 		return new ResponseEntity<>(apimessage,HttpStatus.OK);
 	}
 	
-	//보기
+	//상세보기
 	@GetMapping("/{grId}/qnaboard/{bid}")
-	public ResponseEntity<QnaBoardDto> showQnaboard(@RequestBody QnaBoardDto qnaboardDto, @PathVariable long bid){
+	public ResponseEntity<QnaBoardDto> showQnaboard(@PathVariable long bid){
 		return ResponseEntity.ok(qnaboardService.showQnaboard(bid));
 	}
 	
-//	//전체보기
-//	@GetMapping("/{grId}/qnaboard")
-//	public List<QnaBoardDto> getAllQnaboardList(@RequestBody QnaBoardDto qnaboardDto){
-//		return qnaboardService.getAllQnaboardList();
-//	}
 	
 	//전체보기
 	@GetMapping("/{grId}/qnaboard")
 	public List<QnaBoardDto> getAllQnaboardList(@PathVariable(name="grId") long grId){
-		System.out.println("테스트!!!");
 		return qnaboardService.getAllQnaboardList(grId);
 	}
 	
