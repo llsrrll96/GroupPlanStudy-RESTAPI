@@ -8,6 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -29,6 +33,8 @@ public class QnaBoardComment {
 	private String content;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone="Asia/seoul")
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date regdate;
 	
 	@ManyToOne
