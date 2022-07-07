@@ -9,8 +9,8 @@ public interface ApplyMemberService
 	public APIMessage applyGroupRoom(ApplyMemberDto applyMemberDto);
 	
 	// 그룹 방 승인
-	public APIMessage allowGroupRoom(ApplyMemberDto applyMemberDto);
+	public APIMessage allowGroupMember(ApplyMemberDto applyMemberDto);
 	
 	// 그룹 방 거절
-	public APIMessage refuseGroupRoom(long uid, long grId);
+	public APIMessage refuseGroupMember(ApplyMemberDto applyMemberDto);
 }
