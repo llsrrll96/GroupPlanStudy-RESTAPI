@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springboot.gpsapi.payload.APIMessage;
 import com.springboot.gpsapi.payload.GroupRoomDto;
 import com.springboot.gpsapi.service.OpenGroupBoardService;
 
@@ -37,8 +38,11 @@ public class OpenGroupBoardController
 	
 	// get seached list
 	@GetMapping
-	public List<GroupRoomDto> getGroupRoomByTitle(@RequestParam(defaultValue="",required=false) String title){
-		return openGroupBoardService.getGroupRoomContainingTitle(title);
+	public ResponseEntity<APIMessage> getGroupRoomByTitle(@RequestParam(defaultValue="",required=false) String title){
+		APIMessage apiMessage = new APIMessage();
+		apiMessage.setMessage("OK");
+		apiMessage.setData(( List<GroupRoomDto>)openGroupBoardService.getGroupRoomContainingTitle(title));
+		return new ResponseEntity<>(apiMessage, HttpStatus.OK);
 	}
 
 }
