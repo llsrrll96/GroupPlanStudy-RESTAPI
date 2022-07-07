@@ -1,5 +1,6 @@
 package com.springboot.gpsapi.serviceImpl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,34 +27,39 @@ public class OpenGroupBoardServiceImpl implements OpenGroupBoardService
 	
 	
 	@Override
-	public List<GroupRoomDto> getAllGroupRooms() {
+	public List<GroupRoomDto> getAllGroupRooms() 
+	{
 		List<GroupRoom> groupRooms = openGroupBoardRepository.findAll();
 		return groupRooms.stream().map( groupRoom -> mapToDto(groupRoom)).collect(Collectors.toList()	);
 	}
 
 	@Override
-	public GroupRoomDto getGroupRoomById(Long grId) {
+	public GroupRoomDto getGroupRoomById(Long grId) 
+	{
 		GroupRoom groupRoom= openGroupBoardRepository.findByGrId(grId);
-		
 		return mapToDto(groupRoom);
 	}
 
 	@Override
-	public List<GroupRoomDto> getGroupRoomContainingTitle(String title) {
+	public List<GroupRoomDto> getGroupRoomContainingTitle(String title) 
+	{
 		List<GroupRoom> groupRooms= openGroupBoardRepository.findByTitleContaining(title);
-		log.info(groupRooms.get(0).getUser().getEmail());
-		return groupRooms.stream().map( groupRoom -> mapToGrDto(groupRoom)		).collect(Collectors.toList());
+		
+		List<GroupRoomDto> groupRoomDtos = groupRooms.stream().map( groupRoom -> mapToGrDto(groupRoom)).collect(Collectors.toList());
+		
+		// 내림차순 정렬
+		Collections.sort(groupRoomDtos, Collections.reverseOrder());
+		
+		return groupRoomDtos;
 	}
 	
 	
 	
-	private GroupRoomDto mapToDto(GroupRoom groupRoom)
-	{
+	private GroupRoomDto mapToDto(GroupRoom groupRoom)	{
 		return mapper.map(groupRoom, GroupRoomDto.class);
 	}
 	
-	private GroupRoom mapToEntity(GroupRoomDto groupRoom)
-	{
+	private GroupRoom mapToEntity(GroupRoomDto groupRoom){
 		return mapper.map(groupRoom, GroupRoom.class);
 	}
 	

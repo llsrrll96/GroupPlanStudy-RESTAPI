@@ -7,7 +7,7 @@ import javax.persistence.Enumerated;
 import lombok.Data;
 
 @Data
-public class GroupRoomDto 
+public class GroupRoomDto implements Comparable<GroupRoomDto>
 {
 	private long grId;
 	private UserDto userDto;
@@ -16,5 +16,13 @@ public class GroupRoomDto
 	// OPEN , CLOSED
 	private Applicable applicable;
 	private int memberLimit;
+	
+	
+	@Override
+	public int compareTo(GroupRoomDto dto) {
+		if(dto.grId < grId) {
+			return 1;
+		}else return -1;
+	}
 
 }

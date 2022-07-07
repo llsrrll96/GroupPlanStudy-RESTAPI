@@ -113,7 +113,7 @@ public class ApplyMemberServiceImpl implements ApplyMemberService
 
 	@Override
 	@Transactional
-	public APIMessage allowGroupRoom(ApplyMemberDto applyMemberDto) {
+	public APIMessage allowGroupMember(ApplyMemberDto applyMemberDto) {
 		// insert groupmember and delete applymember
 		
 		APIMessage apiMessage = new APIMessage();
@@ -149,9 +149,17 @@ public class ApplyMemberServiceImpl implements ApplyMemberService
 	}
 
 	@Override
-	public APIMessage refuseGroupRoom(long uid, long grId) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public APIMessage refuseGroupMember(ApplyMemberDto applyMemberDto) {
+		APIMessage apiMessage = new APIMessage();
+		Long grId = applyMemberDto.getGrId();
+		Long uid = applyMemberDto.getUid();
+		
+		GroupRoom groupRoom=  openGroupBoardRepository.findById(grId).get();
+		applyMemberRepository.deleteGmIdByGroupRoomAndUid(groupRoom, uid);
+		
+		apiMessage.setMessage("신청 거절");
+		return apiMessage;
 	}
 
 }
