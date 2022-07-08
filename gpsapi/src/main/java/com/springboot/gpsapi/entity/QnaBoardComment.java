@@ -39,7 +39,7 @@ public class QnaBoardComment {
 	
 	@ManyToOne
 	@JoinColumn(name = "bid")
-	private QnaBoard qnaboard;
+	private QnaBoard qnaBoard;
 	
 
 }
