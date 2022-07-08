@@ -30,6 +30,12 @@ public class LoginController
 		return new ResponseEntity<>(loginService.createUser(userDto),HttpStatus.CREATED);
 	}
 	
+	//Login
+	@PostMapping("/login")
+	public ResponseEntity<UserDto> loginUser(@RequestBody UserDto userDto){
+		return new ResponseEntity<UserDto>(loginService.loginUser(userDto),HttpStatus.OK);
+	}
+	
 	// get All User List
 	@GetMapping
 	public List<UserDto> getAllUser(){

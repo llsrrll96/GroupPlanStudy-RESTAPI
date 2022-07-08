@@ -8,6 +8,8 @@ public interface LoginService
 {
 	public UserDto createUser(UserDto userDto);
 	
+	public UserDto loginUser(UserDto userDto);
+	
 	public List<UserDto> getAllUserDto();
 	
 	public UserDto getUserById(Long uid);

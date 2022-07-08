@@ -31,6 +31,19 @@ public class LoginServiceImpl implements LoginService
 	}
 
 	@Override
+	public UserDto loginUser(UserDto userDto) {
+		User user = mapToEntity(userDto);
+		
+		String email = user.getEmail();
+		String password = user.getPassword();
+		
+		user = loginRepository.Login(email, password);
+		
+		return mapToDto(user);
+	}
+
+
+	@Override
 	public List<UserDto> getAllUserDto() {
 		List<User> userList= loginRepository.findAll();
 		
@@ -75,5 +88,6 @@ public class LoginServiceImpl implements LoginService
 		UserDto userDto = mapper.map(user, UserDto.class);
 		return userDto;
 	}
+
 
 }
