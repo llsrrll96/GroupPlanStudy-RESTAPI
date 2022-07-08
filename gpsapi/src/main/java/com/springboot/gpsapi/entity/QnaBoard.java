@@ -53,8 +53,8 @@ public class QnaBoard {
 	private Date regdate;
 	
 	
-	@OneToMany(mappedBy = "qnaboard", fetch=FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval= true) 
-	@JsonIgnoreProperties("qnaboard")
+	@OneToMany(mappedBy = "qnaBoard", fetch=FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval= true) 
+	@JsonIgnoreProperties("qnaBoard")
 	private List<QnaBoardComment> qnaboardcomments = new ArrayList<>() ;
 	
 
