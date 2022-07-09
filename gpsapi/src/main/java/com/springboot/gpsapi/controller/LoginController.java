@@ -30,10 +30,15 @@ public class LoginController
 		return new ResponseEntity<>(loginService.createUser(userDto),HttpStatus.CREATED);
 	}
 	
-	//Login
+	//Login APIMessge로 변환
 	@PostMapping("/login")
-	public ResponseEntity<UserDto> loginUser(@RequestBody UserDto userDto){
-		return new ResponseEntity<UserDto>(loginService.loginUser(userDto),HttpStatus.OK);
+	public ResponseEntity<APIMessage> loginUser(@RequestBody UserDto userDto){
+		
+		APIMessage apimessage = new APIMessage();
+		apimessage.setMessage("success");
+		apimessage.setData(loginService.loginUser(userDto));
+		
+		return new ResponseEntity<>(apimessage,HttpStatus.OK);
 	}
 	
 	// get All User List
