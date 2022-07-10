@@ -37,7 +37,7 @@ public class ApplyMemberServiceImpl implements ApplyMemberService
 	private OpenGroupBoardRepository openGroupBoardRepository;
 	
 	@Override
-	@Transactional
+//	@Transactional
 	public APIMessage applyGroupRoom(ApplyMemberDto applyMemberDto) 
 	{
 		APIMessage apiMessage = new APIMessage();
@@ -98,11 +98,7 @@ public class ApplyMemberServiceImpl implements ApplyMemberService
 		}catch(NullPointerException e ) {
 			e.printStackTrace();
 			// group_apply table 에 값이 없을때 -> insert
-			groupApplyMember.setGmId(grId);
-			groupApplyMember.setUid(uid);
-			groupApplyMember.setGroupRoom(groupRoom);
 		}
-		groupApplyMember.setGmId(grId);
 		groupApplyMember.setUid(uid);
 		groupApplyMember.setGroupRoom(groupRoom);
 		applyMemberRepository.save(groupApplyMember);
