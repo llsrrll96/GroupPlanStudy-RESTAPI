@@ -55,8 +55,13 @@ public class LoginController
 	
 	// update user by id rest api
 	@PutMapping("/{id}")
-	public ResponseEntity<UserDto> updatePost(@RequestBody UserDto userDto, @PathVariable(name="id") long uid){
-		return new ResponseEntity<>(loginService.updateUser(userDto, uid),HttpStatus.OK);
+	public ResponseEntity<APIMessage> updatePost(@RequestBody UserDto userDto, @PathVariable(name="id") long uid){
+		
+		APIMessage apimessage = new APIMessage();
+		apimessage.setMessage("update");
+		apimessage.setData(loginService.updateUser(userDto, uid));
+		
+		return new ResponseEntity<>(apimessage,HttpStatus.OK);
 	}
 	
 	// delete post by id rest api
