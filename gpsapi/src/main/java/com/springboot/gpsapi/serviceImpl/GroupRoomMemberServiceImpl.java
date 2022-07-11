@@ -50,6 +50,7 @@ public class GroupRoomMemberServiceImpl implements GroupRoomMemberService
 		groupMemberDto.setGrId(groupRoom.getGrId());
 		groupMemberDto.setUid(user.getUid());
 		groupMemberDto.setName(user.getNickname());
+		groupMemberDto.setIntro(user.getIntroduce());
 		
 		if (groupRoom.getUser().getUid() == user.getUid()) groupMemberDto.setRole(GroupRole.LEADER);
 		else groupMemberDto.setRole(GroupRole.MEMBER);
