@@ -14,4 +14,10 @@ public interface LoginRepository  extends JpaRepository<User, Long>{
 			nativeQuery = true) // 동적으로 쿼리 날릴때 true
 	List<User> findUserInUids(@Param("uids") Long[] uids);
 
+	
+	@Query(value = "select * from user u where u.email = :email and u.password = :password",
+		nativeQuery = true)
+	User Login(@Param("email") String email, @Param("password") String password);
+	
+	
 }
