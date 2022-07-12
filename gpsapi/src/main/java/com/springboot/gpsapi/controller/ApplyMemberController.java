@@ -33,7 +33,7 @@ public class ApplyMemberController
 		return new ResponseEntity<>(apiMessage,HttpStatus.OK); 
 	}
 	
-	@DeleteMapping("/refuse")
+	@PostMapping("/refuse")
 	private ResponseEntity<APIMessage> refuseGroupMember(@RequestBody ApplyMemberDto applyMemberDto){
 		APIMessage apiMessage= applyMemberService.refuseGroupMember(applyMemberDto);
 		return new ResponseEntity<>(apiMessage,HttpStatus.OK); 
