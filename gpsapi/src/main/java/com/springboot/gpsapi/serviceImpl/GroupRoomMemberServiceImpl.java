@@ -60,7 +60,8 @@ public class GroupRoomMemberServiceImpl implements GroupRoomMemberService
 	}
 	
 	@Override
-	public List<UserDto> getApplyMembers(long grId) {
+	public List<UserDto> getApplyMembers(long grId) 
+	{
 		// 멤버 리스트 (닉네임)
 		GroupRoom groupRoom = groupRoomRepository.getById(grId);
 		List<GroupApplyMember> groupApplyMembers = applyMemberRepository.findByGroupRoom(groupRoom);
@@ -78,7 +79,8 @@ public class GroupRoomMemberServiceImpl implements GroupRoomMemberService
 	}
 
 	@Override
-	public List<GroupMemberDto> getGroupMembers(long grId) {
+	public List<GroupMemberDto> getGroupMembers(long grId) 
+	{
 		GroupRoom groupRoom = groupRoomRepository.getById(grId);
 		List<GroupMember> groupMembers = groupMemberRepository.findByGroupRoom(groupRoom);
 
@@ -92,6 +94,17 @@ public class GroupRoomMemberServiceImpl implements GroupRoomMemberService
 		List<User> users= loginRepository.findUserInUids(uids);
 		
 		return users.stream().map(user -> entityToGroupMemberDto(user, groupRoom)).collect(Collectors.toList());
+	}
+	
+	@Override
+	public GroupMemberDto getGroupMemberByUid(long grId, long uid) 
+	{
+		GroupRoom groupRoom = groupRoomRepository.getById(grId);
+		GroupMember groupMember = groupMemberRepository.findByGroupRoomAndUid(groupRoom, uid);
+		log.info("groupMember: " + groupMember.getUid());
+		User user = loginRepository.findById(uid).get();
+		
+		return entityToGroupMemberDto(user, groupRoom);
 	}
 	
 

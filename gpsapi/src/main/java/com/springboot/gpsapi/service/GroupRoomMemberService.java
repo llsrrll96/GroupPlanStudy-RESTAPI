@@ -14,4 +14,6 @@ public interface GroupRoomMemberService
 	
 	// 그룹방의 참여 멤버 목록 보기
 	List<GroupMemberDto> getGroupMembers(long grId);
+	
+	GroupMemberDto getGroupMemberByUid(long grId, long uid);
 }
