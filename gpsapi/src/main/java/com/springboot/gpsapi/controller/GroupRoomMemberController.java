@@ -40,4 +40,13 @@ public class GroupRoomMemberController
 		return new ResponseEntity<APIMessage>(apiMessage, HttpStatus.OK);
 	}
 	
+	@GetMapping("/groupMembers/{grid}/{uid}")
+	private ResponseEntity<APIMessage> getGroupMemberByUid(@PathVariable(name="grid") long grId, @PathVariable long uid)
+	{
+		APIMessage apiMessage= new APIMessage();
+		apiMessage.setMessage("멤버");
+		apiMessage.setData((GroupMemberDto) groupRoomMemberService.getGroupMemberByUid(grId, uid));
+		return new ResponseEntity<APIMessage>(apiMessage, HttpStatus.OK);
+	}
+	
 }
