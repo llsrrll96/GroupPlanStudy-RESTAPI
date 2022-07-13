@@ -72,7 +72,7 @@ public class ApplyMemberServiceImpl implements ApplyMemberService
 			// test clear
 			if(applyMembers.size() >= groupRoom.getMemberLimit()-1)
 			{
-				apiMessage.setMessage("신청인원이 초과되었습니다.");
+				apiMessage.setMessage("멤버 정원이 초과되었습니다.");
 				return apiMessage;
 			}
 			
