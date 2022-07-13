@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springboot.gpsapi.entity.GroupMember;
 import com.springboot.gpsapi.payload.APIMessage;
 import com.springboot.gpsapi.payload.GroupMemberDto;
+import com.springboot.gpsapi.payload.GroupMemberDto2;
 import com.springboot.gpsapi.payload.UserDto;
 import com.springboot.gpsapi.service.GroupRoomMemberService;
 
@@ -47,6 +49,21 @@ public class GroupRoomMemberController
 		apiMessage.setMessage("멤버");
 		apiMessage.setData((GroupMemberDto) groupRoomMemberService.getGroupMemberByUid(grId, uid));
 		return new ResponseEntity<APIMessage>(apiMessage, HttpStatus.OK);
+	}
+	
+	//내가 들어간 그룹
+	@GetMapping("/{uid}")
+	private ResponseEntity<APIMessage> getMyGroup(@PathVariable(name = "uid")long uid){
+		APIMessage apiMessage = new APIMessage();
+		apiMessage.setData(groupRoomMemberService.getMyGroup(uid));
+		apiMessage.setMessage("내 그룹");
+		return new ResponseEntity<APIMessage>(apiMessage, HttpStatus.OK);
+	}
+	
+	//전체 그룹 맴버
+	@GetMapping
+	public List<GroupMemberDto2> getAllMember(){
+		return groupRoomMemberService.getAllMemberDto();
 	}
 	
 }
