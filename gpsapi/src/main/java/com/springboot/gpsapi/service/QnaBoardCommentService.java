@@ -13,6 +13,6 @@ public interface QnaBoardCommentService {
 	public void deleteQnacommentByCid(Long cid);
 
 	// 전체보기
-	public List<QnaBoardCommentDto> getAllQnacommentList(long bid);
+	public List<QnaBoardCommentDto> getAllQnaCommentList(long grId, long bid);
 
 }

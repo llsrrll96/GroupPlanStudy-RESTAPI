@@ -43,10 +43,10 @@ public class QnaBoardCommentController {
 
 	// 전체보기
 	@GetMapping("/{grId}/qnaboard/{bid}/comment")
-	private ResponseEntity<APIMessage> getAllQnacommentList(@PathVariable long bid) {
+	private ResponseEntity<APIMessage> getAllQnacommentList(@PathVariable long grId, @PathVariable long bid) {
 		APIMessage apiMessage = new APIMessage();
 		apiMessage.setMessage("QnA댓글 목록");
-		apiMessage.setData((List<QnaBoardCommentDto>) qnaboardcommentservice.getAllQnacommentList(bid));
+		apiMessage.setData((List<QnaBoardCommentDto>) qnaboardcommentservice.getAllQnaCommentList(grId,bid));
 		return new ResponseEntity<APIMessage>(apiMessage, HttpStatus.OK);
 	}
 
