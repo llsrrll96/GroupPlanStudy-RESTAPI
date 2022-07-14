@@ -20,6 +20,7 @@ import com.springboot.gpsapi.entity.QnaBoardComment;
 import com.springboot.gpsapi.entity.User;
 import com.springboot.gpsapi.payload.GroupMemberDto;
 import com.springboot.gpsapi.payload.GroupRole;
+import com.springboot.gpsapi.payload.GroupRoomDto;
 import com.springboot.gpsapi.payload.QnaBoardCommentDto;
 import com.springboot.gpsapi.payload.QnaBoardDto;
 import com.springboot.gpsapi.payload.UserDto;
@@ -56,10 +57,10 @@ public class QnaBoardCommentServiceImpl implements QnaBoardCommentService {
 		QnaBoard qnaboard = qnaboardRepository.findById(bid).get();
 		qnacomment.setQnaBoard(qnaboard);
 		qnacomment.setUid(uid);
-
+		
 		QnaBoardComment newqnaComment = qnaBoardCommentRepository.save(qnacomment);
 
-		return mapToDto(newqnaComment);
+		return mapToDto(newqnaComment, uid);
 	}
 
 	// 삭제
@@ -102,11 +103,16 @@ public class QnaBoardCommentServiceImpl implements QnaBoardCommentService {
 		for(QnaBoardComment qbc : qnaboardcomments)
 		{
 			QnaBoardCommentDto qnaBoardCommentDto = mapper.map(qbc, QnaBoardCommentDto.class);
-			if(userMap.containsKey(qnaBoardCommentDto.getUid())) {
+			
+
+			if(userMap.containsKey(qnaBoardCommentDto.getUid())) 
+			{
 				UserDto userDto= mapper.map(userMap.get(qnaBoardCommentDto.getUid()), UserDto.class);
 				qnaBoardCommentDto.setUserDto(userDto);
 				qnaBoardCommentDtos.add(qnaBoardCommentDto);
 			}
+			
+			
 		}
 		
 		return qnaBoardCommentDtos;
@@ -122,13 +128,14 @@ public class QnaBoardCommentServiceImpl implements QnaBoardCommentService {
 		return qnaboardcomment;
 	}
 
-	private QnaBoardCommentDto mapToDto(QnaBoardComment qnaboardcomment) {
+	private QnaBoardCommentDto mapToDto(QnaBoardComment qnaboardcomment, long uid) {
 		QnaBoardCommentDto qnaboardcommentDto = mapper.map(qnaboardcomment, QnaBoardCommentDto.class);
 
 		QnaBoardDto qnaboardDto = null;
 		qnaboardDto = mapper.map(qnaboardcomment.getQnaBoard(), QnaBoardDto.class);
 		qnaboardcommentDto.setQnaBoardDto(qnaboardDto);
-
+		UserDto userDto= mapper.map(loginRepository.findById(uid).get(), UserDto.class);
+		qnaboardcommentDto.setUserDto(userDto);
 		return qnaboardcommentDto;
 	}
 
