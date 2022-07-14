@@ -56,4 +56,10 @@ public class GroupRoom
 	
 	@OneToMany(mappedBy="groupRoom", cascade= CascadeType.ALL, orphanRemoval= true)
 	private List<GroupMember> groupMember = new ArrayList<>();
+	
+	@OneToMany(mappedBy="groupRoom", cascade= CascadeType.ALL, orphanRemoval= true)
+	private List<GroupApplyMember> groupApplyMember = new ArrayList<>();
+	
+	@OneToMany(mappedBy="groupRoom", cascade= CascadeType.ALL, orphanRemoval= true)
+	private List<QnaBoard> qnaBoard = new ArrayList<>();
 }
