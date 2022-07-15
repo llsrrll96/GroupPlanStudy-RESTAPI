@@ -40,11 +40,9 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 		QnaBoard qnaboard = mapToEntity(qnaboardDto);
 		
 		User user = loginRepository.findById(uid).get();
-		System.out.println(user.getUid());
 		qnaboard.setUser(user);
 		
 		GroupRoom newgrouproom = gRoomRepository.findById(grId).get();
-		System.out.println(newgrouproom.getGrId());
 		qnaboard.setGroupRoom(newgrouproom);
 		
 		
@@ -58,7 +56,6 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 	@Transactional
 	public QnaBoardDto updateQnaboard(QnaBoardDto qnaboardDto, Long bid) {
 		QnaBoard qnaboard = qnaboardRepository.findById(bid).get();
-		
 		
 		qnaboard.setTitle(qnaboardDto.getTitle());
 		qnaboard.setContent(qnaboardDto.getContent());

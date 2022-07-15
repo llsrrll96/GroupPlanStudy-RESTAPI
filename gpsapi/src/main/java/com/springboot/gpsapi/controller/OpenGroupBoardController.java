@@ -29,12 +29,6 @@ public class OpenGroupBoardController
 		GroupRoomDto  groupRoomDto= openGroupBoardService.getGroupRoomById(grId);
 		return new ResponseEntity<>(groupRoomDto, HttpStatus.CREATED);
 	}
-
-//	// get  list
-//	@GetMapping
-//	public List<GroupRoomDto> getAllGroupRooms(){
-//		return openGroupBoardService.getAllGroupRooms();
-//	}
 	
 	// get seached list
 	@GetMapping
