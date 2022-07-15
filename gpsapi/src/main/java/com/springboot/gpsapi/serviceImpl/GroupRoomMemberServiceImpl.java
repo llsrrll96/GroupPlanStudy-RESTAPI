@@ -3,6 +3,8 @@ package com.springboot.gpsapi.serviceImpl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.catalina.mapper.Mapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,9 @@ import com.springboot.gpsapi.entity.GroupMember;
 import com.springboot.gpsapi.entity.GroupRoom;
 import com.springboot.gpsapi.entity.User;
 import com.springboot.gpsapi.payload.GroupMemberDto;
+import com.springboot.gpsapi.payload.GroupMemberDto2;
 import com.springboot.gpsapi.payload.GroupRole;
+import com.springboot.gpsapi.payload.GroupRoomDto;
 import com.springboot.gpsapi.payload.UserDto;
 import com.springboot.gpsapi.repository.ApplyMemberRepository;
 import com.springboot.gpsapi.repository.GroupMemberRepository;
@@ -33,6 +37,8 @@ public class GroupRoomMemberServiceImpl implements GroupRoomMemberService
 	private GroupRoomRepository groupRoomRepository;
 	@Autowired
 	private LoginRepository loginRepository;
+	@Autowired
+	private ModelMapper mapper;
 
 	private UserDto entityToDto(User user)
 	{
@@ -106,6 +112,28 @@ public class GroupRoomMemberServiceImpl implements GroupRoomMemberService
 		return entityToGroupMemberDto(user, groupRoom);
 	}
 	
-
+	
+	@Override
+	public List<GroupMemberDto2> getMyGroup(long uid) {
+		List<GroupMember> groupMember = groupMemberRepository.findByUid(uid);
+		
+		return groupMember.stream().map(post->mapToDto(post)).collect(Collectors.toList());
+	}
+	
+	@Override
+	public List<GroupMemberDto2> getAllMemberDto() {
+		List<GroupMember> groupMember = groupMemberRepository.findAll();
+		
+		return groupMember.stream().map(post->mapToDto(post)).collect(Collectors.toList());
+	}
+	
+	//Entity -- Dto
+	private GroupMemberDto2 mapToDto(GroupMember groupMember)
+	{
+		GroupMemberDto2 groupMemberDto2 = mapper.map(groupMember, GroupMemberDto2.class);
+		groupMemberDto2.setGroupRoomDto(mapper.map(groupMember.getGroupRoom(), GroupRoomDto.class));
+		
+		return groupMemberDto2;
+	}
 
 }

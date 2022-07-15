@@ -37,9 +37,9 @@ public class GroupRoomController {
 	}
 	
 	//get Group room by id
-	@GetMapping("/{id}")
-	public ResponseEntity<GroupRoomDto> getGRoomById(@PathVariable(name="id") long gr_id){
-		return ResponseEntity.ok(grService.getGRoomById(gr_id));
+	@GetMapping("/{grId}")
+	public GroupRoomDto getGRoomById(@PathVariable(name="grId") long grId){
+		return grService.getGRoomById(grId);
 	}
 	
 	//update Group room by id rest api
