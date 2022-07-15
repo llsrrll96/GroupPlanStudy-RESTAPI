@@ -51,7 +51,7 @@ public class GroupRoomMemberController
 		return new ResponseEntity<APIMessage>(apiMessage, HttpStatus.OK);
 	}
 	
-	//내가 들어간 그룹
+	//내가 들어간 그룹//
 	@GetMapping("/{uid}")
 	private ResponseEntity<APIMessage> getMyGroup(@PathVariable(name = "uid")long uid){
 		APIMessage apiMessage = new APIMessage();
