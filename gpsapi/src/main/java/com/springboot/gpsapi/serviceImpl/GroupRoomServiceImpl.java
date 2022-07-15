@@ -77,9 +77,6 @@ public class GroupRoomServiceImpl implements GroupRoomService{
 	public GroupRoomDto updateGroom(GroupRoomDto gRoomDto, Long rb_id) {
 		GroupRoom gRoom = gRoomRepository.findById(rb_id).get();
 		
-		System.out.println(gRoom.getUser());
-		System.out.println(gRoom.getGrId());
-		
 		gRoom.setApplicable(gRoomDto.getApplicable());
 		gRoom.setIntroduce(gRoomDto.getIntroduce());
 		gRoom.setMemberLimit(gRoomDto.getMemberLimit());
