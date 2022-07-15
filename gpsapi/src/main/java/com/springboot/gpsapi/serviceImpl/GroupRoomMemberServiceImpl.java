@@ -107,7 +107,6 @@ public class GroupRoomMemberServiceImpl implements GroupRoomMemberService
 	{
 		GroupRoom groupRoom = groupRoomRepository.getById(grId);
 		GroupMember groupMember = groupMemberRepository.findByGroupRoomAndUid(groupRoom, uid);
-		log.info("groupMember: " + groupMember.getUid());
 		User user = loginRepository.findById(uid).get();
 		
 		return entityToGroupMemberDto(user, groupRoom);
