@@ -5,7 +5,6 @@ import java.util.List;
 import com.springboot.gpsapi.entity.GroupApplyMember;
 import com.springboot.gpsapi.entity.GroupMember;
 import com.springboot.gpsapi.payload.GroupMemberDto;
-import com.springboot.gpsapi.payload.GroupMemberDto2;
 import com.springboot.gpsapi.payload.UserDto;
 
 public interface GroupRoomMemberService 
@@ -17,8 +16,4 @@ public interface GroupRoomMemberService
 	List<GroupMemberDto> getGroupMembers(long grId);
 	
 	GroupMemberDto getGroupMemberByUid(long grId, long uid);
-	
-	List<GroupMemberDto2> getMyGroup(long uid);
-	
-	List<GroupMemberDto2> getAllMemberDto();
 }

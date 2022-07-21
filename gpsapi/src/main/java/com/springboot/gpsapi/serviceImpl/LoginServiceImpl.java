@@ -45,7 +45,7 @@ public class LoginServiceImpl implements LoginService
 
 	@Override
 	public List<UserDto> getAllUserDto() {
-		List<User> userList= loginRepository.findUser();
+		List<User> userList= loginRepository.findAll();
 		
 		return userList.stream().map(post->mapToDto(post)).collect(Collectors.toList());
 	}
