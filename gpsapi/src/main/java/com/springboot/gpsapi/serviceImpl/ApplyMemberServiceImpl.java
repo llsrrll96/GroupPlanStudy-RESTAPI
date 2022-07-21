@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.springboot.gpsapi.entity.GroupApplyMember;
 import com.springboot.gpsapi.entity.GroupMember;
 import com.springboot.gpsapi.entity.GroupRoom;
-import com.springboot.gpsapi.entity.User;
 import com.springboot.gpsapi.payload.APIMessage;
 import com.springboot.gpsapi.payload.Applicable;
 import com.springboot.gpsapi.payload.ApplyMemberDto;
@@ -19,7 +18,6 @@ import com.springboot.gpsapi.payload.GroupRole;
 import com.springboot.gpsapi.repository.ApplyMemberRepository;
 import com.springboot.gpsapi.repository.GroupMemberRepository;
 import com.springboot.gpsapi.repository.GroupRoomRepository;
-import com.springboot.gpsapi.repository.LoginRepository;
 import com.springboot.gpsapi.repository.OpenGroupBoardRepository;
 import com.springboot.gpsapi.service.ApplyMemberService;
 
@@ -38,9 +36,6 @@ public class ApplyMemberServiceImpl implements ApplyMemberService
 	@Autowired
 	private OpenGroupBoardRepository openGroupBoardRepository;
 	
-	@Autowired
-	private LoginRepository loginRepository;
-	
 	@Override
 //	@Transactional
 	public APIMessage applyGroupRoom(ApplyMemberDto applyMemberDto) 
@@ -57,7 +52,6 @@ public class ApplyMemberServiceImpl implements ApplyMemberService
 		GroupRoom groupRoom=  openGroupBoardRepository.findById(grId).get();
 		List<GroupApplyMember> applyMembers = applyMemberRepository.findByGroupRoom(groupRoom);
 		List<GroupMember> groupMembers = groupMemberRepository.findByGroupRoom(groupRoom);
-		User user = loginRepository.findById(uid).get();
 
 		try 
 		{
@@ -86,7 +80,7 @@ public class ApplyMemberServiceImpl implements ApplyMemberService
 			{
 				// already is there uid value in the apply table
 				// test clear
-				if(gam.getUser().getUid() == uid)
+				if(gam.getUid() == uid)
 				{
 					apiMessage.setMessage("이미 신청한 상태 입니다.");
 					return apiMessage;
@@ -95,7 +89,7 @@ public class ApplyMemberServiceImpl implements ApplyMemberService
 			
 			for(GroupMember gm : groupMembers)
 			{
-				if(gm.getUser().getUid() == uid)
+				if(gm.getUid() == uid)
 				{
 					apiMessage.setMessage("이미 스터디 멤버입니다!");
 					return apiMessage;
@@ -105,7 +99,7 @@ public class ApplyMemberServiceImpl implements ApplyMemberService
 			e.printStackTrace();
 			// group_apply table 에 값이 없을때 -> insert
 		}
-		groupApplyMember.setUser(user);
+		groupApplyMember.setUid(uid);
 		groupApplyMember.setGroupRoom(groupRoom);
 		applyMemberRepository.save(groupApplyMember);
 		
@@ -127,7 +121,7 @@ public class ApplyMemberServiceImpl implements ApplyMemberService
 		List<GroupMember> groupMembers = groupMemberRepository.findByGroupRoom(groupRoom);
 		for(GroupMember gm : groupMembers)
 		{
-			if(gm.getUser().getUid() == uid)
+			if(gm.getUid() == uid)
 			{
 				apiMessage.setMessage("이미 스터디 멤버입니다!");
 				return apiMessage;
@@ -136,14 +130,14 @@ public class ApplyMemberServiceImpl implements ApplyMemberService
 		
 		// insert group_member table
 		GroupMember groupMember = new GroupMember();
-		groupMember.setUser(loginRepository.findById(uid).get());
+		groupMember.setUid(uid);
 		groupMember.setGroupRoom(groupRoom);
 		groupMember.setRole(GroupRole.MEMBER);
 		
 		groupMemberRepository.save(groupMember);
 
 		// delete in apply table
-		applyMemberRepository.deleteGmIdByGroupRoomAndUser(groupRoom, groupMember.getUser());
+		applyMemberRepository.deleteGmIdByGroupRoomAndUid(groupRoom, uid);
 		
 		
 		apiMessage.setMessage("승인 완료");
@@ -158,7 +152,7 @@ public class ApplyMemberServiceImpl implements ApplyMemberService
 		Long uid = applyMemberDto.getUid();
 		
 		GroupRoom groupRoom=  openGroupBoardRepository.findById(grId).get();
-		applyMemberRepository.deleteGmIdByGroupRoomAndUser(groupRoom, loginRepository.findById(uid).get());
+		applyMemberRepository.deleteGmIdByGroupRoomAndUid(groupRoom, uid);
 		
 		apiMessage.setMessage("신청 거절");
 		return apiMessage;
