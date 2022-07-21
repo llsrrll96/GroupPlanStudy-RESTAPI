@@ -48,7 +48,7 @@ public class GroupRoomServiceImpl implements GroupRoomService{
 		//저장후 데이터 생성
 		groupMember.setGroupRoom(newGRoom);
 		groupMember.setRole(GroupRole.LEADER);
-		groupMember.setUid(uid);
+		groupMember.setUser(loginRepository.findById(uid).get());
 		
 		gMemberRepository.save(groupMember);
 		
