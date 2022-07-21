@@ -56,11 +56,11 @@ public class QnaBoardCommentServiceImpl implements QnaBoardCommentService {
 
 		QnaBoard qnaboard = qnaboardRepository.findById(bid).get();
 		qnacomment.setQnaBoard(qnaboard);
-		qnacomment.setUser(loginRepository.getById(uid));
+		qnacomment.setUid(uid);
 		
 		QnaBoardComment newqnaComment = qnaBoardCommentRepository.save(qnacomment);
 
-		return mapToDto(newqnaComment);
+		return mapToDto(newqnaComment, uid);
 	}
 
 	// 삭제
@@ -82,7 +82,7 @@ public class QnaBoardCommentServiceImpl implements QnaBoardCommentService {
 		// get user Ids to Long Array
 		Long uids[] = new Long[groupMembers.size()];
 		for(int i  =  0; i < groupMembers.size(); i ++){
-			uids[i] = groupMembers.get(i).getUser().getUid();
+			uids[i] = groupMembers.get(i).getUid();
 		}
 		
 		// get user list
@@ -103,15 +103,18 @@ public class QnaBoardCommentServiceImpl implements QnaBoardCommentService {
 		for(QnaBoardComment qbc : qnaboardcomments)
 		{
 			QnaBoardCommentDto qnaBoardCommentDto = mapper.map(qbc, QnaBoardCommentDto.class);
-			qnaBoardCommentDto.setUserDto(mapper.map(qbc.getUser(), UserDto.class));
+			
 
-			if(userMap.containsKey(qnaBoardCommentDto.getUserDto().getUid())) 
+			if(userMap.containsKey(qnaBoardCommentDto.getUid())) 
 			{
-				UserDto userDto= mapper.map(userMap.get(qnaBoardCommentDto.getUserDto().getUid()), UserDto.class);
+				UserDto userDto= mapper.map(userMap.get(qnaBoardCommentDto.getUid()), UserDto.class);
 				qnaBoardCommentDto.setUserDto(userDto);
 				qnaBoardCommentDtos.add(qnaBoardCommentDto);
 			}
+			
+			
 		}
+		
 		return qnaBoardCommentDtos;
 	}
 	
@@ -125,13 +128,13 @@ public class QnaBoardCommentServiceImpl implements QnaBoardCommentService {
 		return qnaboardcomment;
 	}
 
-	private QnaBoardCommentDto mapToDto(QnaBoardComment qnaboardcomment) {
+	private QnaBoardCommentDto mapToDto(QnaBoardComment qnaboardcomment, long uid) {
 		QnaBoardCommentDto qnaboardcommentDto = mapper.map(qnaboardcomment, QnaBoardCommentDto.class);
 
 		QnaBoardDto qnaboardDto = null;
 		qnaboardDto = mapper.map(qnaboardcomment.getQnaBoard(), QnaBoardDto.class);
 		qnaboardcommentDto.setQnaBoardDto(qnaboardDto);
-		UserDto userDto= mapper.map(qnaboardcomment.getUser(), UserDto.class);
+		UserDto userDto= mapper.map(loginRepository.findById(uid).get(), UserDto.class);
 		qnaboardcommentDto.setUserDto(userDto);
 		return qnaboardcommentDto;
 	}
