@@ -3,6 +3,7 @@ package com.springboot.gpsapi.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,7 +30,7 @@ public class QnaBoardComment {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long cid;
 	
-	private Long uid;
+//	private Long uid;
 	private String content;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone="Asia/seoul")
@@ -37,8 +38,13 @@ public class QnaBoardComment {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date regdate;
 	
+	// created user
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="uid")
+	private User user;
+	
 	@ManyToOne
-	@JoinColumn(name = "bid")
+	@JoinColumn(name = "bid") // qnaboard's 변수명
 	private QnaBoard qnaBoard;
 	
 
