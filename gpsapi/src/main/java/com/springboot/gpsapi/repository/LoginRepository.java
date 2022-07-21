@@ -19,6 +19,5 @@ public interface LoginRepository  extends JpaRepository<User, Long>{
 		nativeQuery = true)
 	User Login(@Param("email") String email, @Param("password") String password);
 	
-	@Query(value = "select * from user u where u.email !='admin'", nativeQuery = true)
-	List<User> findUser();
+	
 }
