@@ -31,10 +31,8 @@ public class GroupMember
 	@ManyToOne(fetch=FetchType.LAZY)
 	private GroupRoom groupRoom;
 	
-	@JoinColumn(name="uid")
-	@ManyToOne(fetch= FetchType.LAZY)
-	private User user;
-	
+	private Long uid;
 	@Enumerated(EnumType.STRING)
 	private GroupRole role;
+
 }
