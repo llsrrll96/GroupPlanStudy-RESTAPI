@@ -26,8 +26,8 @@ public class GroupApplyMember
 	@JoinColumn(name="gr_id")
 	@ManyToOne(fetch=FetchType.LAZY)
 	private GroupRoom groupRoom;
-		
-	@JoinColumn(name="uid")
-	@ManyToOne(fetch = FetchType.LAZY)
-	private User user;
+	
+	private Long uid;
+	
+
 }
