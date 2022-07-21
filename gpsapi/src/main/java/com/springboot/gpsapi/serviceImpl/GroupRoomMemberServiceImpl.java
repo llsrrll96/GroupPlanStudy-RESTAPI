@@ -75,7 +75,7 @@ public class GroupRoomMemberServiceImpl implements GroupRoomMemberService
 		// get user Ids to Long Array
 		Long uids[] = new Long[groupApplyMembers.size()];
 		for(int i  =  0; i < groupApplyMembers.size(); i ++){
-			uids[i] = groupApplyMembers.get(i).getUid();
+			uids[i] = groupApplyMembers.get(i).getUser().getUid();
 		}
 		
 		// get user list
@@ -93,7 +93,7 @@ public class GroupRoomMemberServiceImpl implements GroupRoomMemberService
 		// get user Ids to Long Array
 		Long uids[] = new Long[groupMembers.size()];
 		for(int i  =  0; i < groupMembers.size(); i ++){
-			uids[i] = groupMembers.get(i).getUid();
+			uids[i] = groupMembers.get(i).getUser().getUid();
 		}
 		
 		// get user list
@@ -106,8 +106,8 @@ public class GroupRoomMemberServiceImpl implements GroupRoomMemberService
 	public GroupMemberDto getGroupMemberByUid(long grId, long uid) 
 	{
 		GroupRoom groupRoom = groupRoomRepository.getById(grId);
-		GroupMember groupMember = groupMemberRepository.findByGroupRoomAndUid(groupRoom, uid);
 		User user = loginRepository.findById(uid).get();
+		GroupMember groupMember = groupMemberRepository.findByGroupRoomAndUser(groupRoom, user);
 		
 		return entityToGroupMemberDto(user, groupRoom);
 	}
@@ -115,7 +115,7 @@ public class GroupRoomMemberServiceImpl implements GroupRoomMemberService
 	
 	@Override
 	public List<GroupMemberDto2> getMyGroup(long uid) {
-		List<GroupMember> groupMember = groupMemberRepository.findByUid(uid);
+		List<GroupMember> groupMember = groupMemberRepository.findByUser(loginRepository.getById(uid));
 		
 		return groupMember.stream().map(post->mapToDto(post)).collect(Collectors.toList());
 	}
