@@ -33,3 +33,6 @@
 - 그룹 방 내 Q&A 게시판
 - Q&A 게시판 댓글 기능
 
+## 5. 주요 화면
+https://github.com/llsrrll96/GroupPlanStudy
+
