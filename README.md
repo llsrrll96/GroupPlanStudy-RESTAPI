@@ -1,5 +1,6 @@
 # GroupPlanStudy-REST API
->GPS - Group Plan Study Project REST API
+>GPS - Group Plan Study Project REST API <br>
+>스터디 그룹방 프로젝트 
 
 :pushpin: [발표 PPT](https://docs.google.com/presentation/d/1QmOhpWa4ZfQmcahasTL41J_4JZLz4GdJYq-L6JETYSw/edit?usp=sharing)
 
